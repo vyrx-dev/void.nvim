@@ -1,32 +1,33 @@
 local M = {}
 M.palette = {
-	-- CORE BACKGROUNDS
-	bg0 = "#050308", -- darkest accents
-	bg1 = "#121212", -- solid editor background (restore solid for legibility)
-	bg2 = "#2A1F3A", -- lighten secondary surface slightly
-	bg3 = "#311F4F", -- elevated surfaces
-
-	-- CORE FOREGROUNDS
-	fg0 = "#FFFFFF",
-	fg1 = "#C7C2E0", -- brighten main text
-	fg2 = "#D8CFF3", -- soft graph labels
-	fg3 = "#6B578F", -- muted tertiary text
-
+	---------------------------------------------------------------------------
+	-- CORE BACKGROUND SHADES (dark → light)
+	bg0 = "#050308", -- deepest purple-black
+	bg1 = "#12121B", -- primary editor background (navy-purple)
+	bg2 = "#2A1F3A", -- secondary surface (panels, selection)
+	bg3 = "#311F4F", -- elevated surface (statusline, titles)
+	---------------------------------------------------------------------------
+	-- CORE FOREGROUNDS (bright → dim)
+	fg0 = "#FFFFFF", -- max contrast (headings)
+	fg1 = "#C7C2E0", -- primary text (soft lavender)
+	fg2 = "#D8CFF3", -- secondary text (subtle labels)
+	fg3 = "#6B578F", -- tertiary text (muted purple)
+	---------------------------------------------------------------------------
 	-- SELECTION & MISC
-	selbg = "#2A1F3A", -- deeper than bg2 for contrast
-	selfg = "#FFFFFF",
-	comment = "#6B578F",
-
-	-- ACCENT COLORS
-	color1 = "#E0586A",
-	color2 = "#4AB562", -- slightly brighter teal
-	color3 = "#9266C4",
-	color4 = "#B497CE",
-	color5 = "#D1C3EB",
-	color6 = "#C1A3E0",
-
-	-- UI DECORATIVE
-	uic1 = "#311F4F",
+	selbg = "#3A274B", -- visual selection
+	selfg = "#FFFFFF", -- selection text
+	comment = "#6B578F", -- comments/doc
+	---------------------------------------------------------------------------
+	-- ACCENT / SEMANTIC COLORS (inspired by Catppuccin, Gruvbox, TokyoNight)
+	color1 = "#F38BA8", -- errors, FIXMEs (rose pink)
+	color2 = "#A6E3A1", -- success, functions (mint green)
+	color3 = "#F9E2AF", -- warnings, TODOs (soft yellow)
+	color4 = "#89B4FA", -- constants, types (sky blue)
+	color5 = "#CBA6F7", -- strings, constants (lavender)
+	color6 = "#F5C2E7", -- keywords, tags (pale magenta)
+	---------------------------------------------------------------------------
+	-- UI DECORATIVE & LOW EMPHASIS
+	uic1 = "#311F4F", -- borders, separators
 }
 
 function M.apply()
@@ -38,21 +39,30 @@ function M.apply()
 	vim.o.background = "dark"
 	vim.g.colors_name = "void"
 
-	-- Basic
+	-- Basics
 	vim.api.nvim_set_hl(0, "Normal", { fg = p.fg1, bg = p.bg1 })
 	vim.api.nvim_set_hl(0, "NormalFloat", { fg = p.fg1, bg = p.bg2 })
 	vim.api.nvim_set_hl(0, "CursorLine", { bg = p.bg2 })
 	vim.api.nvim_set_hl(0, "Cursor", { fg = p.bg0, bg = p.color2 })
+	vim.api.nvim_set_hl(0, "CursorColumn", { bg = p.bg2 })
 	vim.api.nvim_set_hl(0, "Comment", { fg = p.comment, italic = true })
 
 	-- Syntax
-	vim.api.nvim_set_hl(0, "Statement", { fg = p.color1 })
-	vim.api.nvim_set_hl(0, "Keyword", { fg = p.color6 })
-	vim.api.nvim_set_hl(0, "Constant", { fg = p.color5 })
-	vim.api.nvim_set_hl(0, "String", { fg = p.color1 })
-	vim.api.nvim_set_hl(0, "Function", { fg = p.color2 })
+	vim.api.nvim_set_hl(0, "Statement", { fg = p.color1 }) -- errors
+	vim.api.nvim_set_hl(0, "Keyword", { fg = p.color6 }) -- keywords
+	vim.api.nvim_set_hl(0, "Operator", { fg = p.color6 })
+	vim.api.nvim_set_hl(0, "Constant", { fg = p.color5 }) -- strings
+	vim.api.nvim_set_hl(0, "Number", { fg = p.color5 })
+	vim.api.nvim_set_hl(0, "Boolean", { fg = p.color5 })
+	vim.api.nvim_set_hl(0, "Type", { fg = p.color4 }) -- types
+	vim.api.nvim_set_hl(0, "Structure", { fg = p.color4 })
+	vim.api.nvim_set_hl(0, "Class", { fg = p.color4 })
+	vim.api.nvim_set_hl(0, "String", { fg = p.color5 })
+	vim.api.nvim_set_hl(0, "Special", { fg = p.color5 })
+	vim.api.nvim_set_hl(0, "Function", { fg = p.color2 }) -- mint
 	vim.api.nvim_set_hl(0, "Identifier", { fg = p.color2 })
-	vim.api.nvim_set_hl(0, "Type", { fg = p.color4 })
+	vim.api.nvim_set_hl(0, "PreProc", { fg = p.color3 }) -- TODO
+	vim.api.nvim_set_hl(0, "Underlined", { fg = p.color4, underline = true })
 	vim.api.nvim_set_hl(0, "Todo", { fg = p.color3, bg = p.bg1, bold = true })
 
 	-- UI
@@ -60,16 +70,25 @@ function M.apply()
 	vim.api.nvim_set_hl(0, "CursorLineNr", { fg = p.color2, bold = true })
 	vim.api.nvim_set_hl(0, "Visual", { fg = p.selfg, bg = p.selbg })
 	vim.api.nvim_set_hl(0, "Search", { fg = p.bg0, bg = p.color3 })
+	vim.api.nvim_set_hl(0, "IncSearch", { fg = p.bg0, bg = p.color2 })
 	vim.api.nvim_set_hl(0, "StatusLine", { fg = p.fg1, bg = p.bg3 })
+	vim.api.nvim_set_hl(0, "StatusLineNC", { fg = p.fg3, bg = p.bg2 })
+	vim.api.nvim_set_hl(0, "VertSplit", { fg = p.uic1 })
+	vim.api.nvim_set_hl(0, "WinSeparator", { fg = p.uic1 })
+	vim.api.nvim_set_hl(0, "TabLine", { fg = p.fg3, bg = p.bg2 })
 	vim.api.nvim_set_hl(0, "TabLineFill", { bg = p.bg1 })
+	vim.api.nvim_set_hl(0, "TabLineSel", { fg = p.fg1, bg = p.bg3, bold = true })
 
 	-- Popup
 	vim.api.nvim_set_hl(0, "Pmenu", { fg = p.fg2, bg = p.bg2 })
 	vim.api.nvim_set_hl(0, "PmenuSel", { fg = p.fg1, bg = p.bg1 })
+	vim.api.nvim_set_hl(0, "PmenuSbar", { bg = p.bg2 })
+	vim.api.nvim_set_hl(0, "PmenuThumb", { bg = p.fg3 })
 
-	-- Errors
-	vim.api.nvim_set_hl(0, "Error", { fg = p.color1, bold = true })
-	vim.api.nvim_set_hl(0, "WarningMsg", { fg = p.color3, bold = true })
+	-- Diagnostics
+	vim.api.nvim_set_hl(0, "Error", { fg = p.color1, underline = true })
+	vim.api.nvim_set_hl(0, "WarningMsg", { fg = p.color3, underline = true })
+	vim.api.nvim_set_hl(0, "ModeMsg", { fg = p.fg2 })
 
 	-- Plugins
 	require("void.treesitter").apply()
