@@ -4,8 +4,8 @@ local void = {}
 
 void.normal = {
 	a = { fg = colors.bg1, bg = colors.color2, gui = "bold" },
-	b = { fg = colors.fg1, bg = "#2A2A2A" },
-	c = { fg = colors.uic1, bg = "#1A1A1A" },
+	b = { fg = colors.fg1, bg = "#181824" },
+	c = { fg = colors.uic1, bg = "#1B152B" },
 }
 
 void.insert = {
@@ -31,4 +31,3 @@ void.inactive = {
 }
 
 return void
-
