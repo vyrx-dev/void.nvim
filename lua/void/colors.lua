@@ -2,32 +2,32 @@ local M = {}
 M.palette = {
 	---------------------------------------------------------------------------
 	-- CORE BACKGROUNDS
-	bg0 = "#080611", -- deep purple-black
-	bg1 = "#14121A", -- primary editor background (very dark purple)
-	bg2 = "#2F2742", -- secondary surface (panels & selections)
-	bg3 = "#3C2E5A", -- elevated surfaces (statusline, titles)
+	bg0 = "#080611", -- deepest purple-black
+	bg1 = "#1A162A", -- primary background (rich dark purple)
+	bg2 = "#2C223E", -- secondary surfaces (panels, selection)
+	bg3 = "#3F2A5E", -- elevated surfaces (status, titles)
 	---------------------------------------------------------------------------
 	-- CORE FOREGROUNDS
-	fg0 = "#EDE8F2", -- max contrast (headings)
-	fg1 = "#CFC7E8", -- primary text (soft lilac)
-	fg2 = "#B5AED2", -- secondary text (subtle)
-	fg3 = "#8E84AB", -- tertiary text (muted)
+	fg0 = "#ECE5FA", -- max contrast (headings)
+	fg1 = "#C7BFE8", -- primary text (soft lavender)
+	fg2 = "#A99FE3", -- secondary text (subtle)
+	fg3 = "#7E6FB7", -- tertiary text (muted purple)
 	---------------------------------------------------------------------------
 	-- SELECTION & MISC
-	selbg = "#3C2E5A", -- visual selection
-	selfg = "#EDE8F2", -- selection text
-	comment = "#8E84AB", -- comments
+	selbg = "#3F2A5E", -- visual selection (deeper purple)
+	selfg = "#ECE5FA", -- selection text
+	comment = "#7E6FB7", -- comments
 	---------------------------------------------------------------------------
-	-- ACCENT COLORS
+	-- ACCENT / SEMANTIC COLORS
 	color1 = "#FF5370", -- errors/FIXMEs (vibrant rose red)
-	color2 = "#C3E88D", -- functions/success (bright mint)
-	color3 = "#FFCB6B", -- warnings/TODOs (warm yellow)
-	color4 = "#82AAFF", -- types/constants (cool blue)
-	color5 = "#C792EA", -- strings (rich orchid)
-	color6 = "#FF5370", -- keywords/tags (reuse rose red for punch)
+	color2 = "#8BE9FD", -- functions/success (bright cyan)
+	color3 = "#F1FA8C", -- warnings/TODOs (golden yellow)
+	color4 = "#BD93F9", -- constants/types (soft violet)
+	color5 = "#FFB86C", -- strings (warm peach)
+	color6 = "#FF79C6", -- keywords/tags (bubblegum pink)
 	---------------------------------------------------------------------------
-	-- UI DECORATIVE
-	uic1 = "#3C2E5A", -- borders & separators
+	-- UI DECORATIVE & LOW EMPHASIS
+	uic1 = "#3F2A5E", -- borders & separators
 }
 
 function M.apply()
@@ -39,7 +39,7 @@ function M.apply()
 	vim.o.background = "dark"
 	vim.g.colors_name = "void"
 
-	-- Basics
+	-- Basic
 	vim.api.nvim_set_hl(0, "Normal", { fg = p.fg1, bg = p.bg1 })
 	vim.api.nvim_set_hl(0, "NormalFloat", { fg = p.fg1, bg = p.bg2 })
 	vim.api.nvim_set_hl(0, "CursorLine", { bg = p.bg2 })
@@ -65,11 +65,11 @@ function M.apply()
 	vim.api.nvim_set_hl(0, "CursorLineNr", { fg = p.color2, bold = true })
 	vim.api.nvim_set_hl(0, "Visual", { fg = p.selfg, bg = p.selbg })
 	vim.api.nvim_set_hl(0, "Search", { fg = p.bg0, bg = p.color3 })
-	vim.api.nvim_set_hl(0, "StatusLine", { fg = p.fg1, bg = p.bg3 })
+	vim.api.nvim_set_hl(0, "StatusLine", { fg = p.fg0, bg = p.bg3 })
 	vim.api.nvim_set_hl(0, "TabLineFill", { bg = p.bg1 })
 	vim.api.nvim_set_hl(0, "TabLineSel", { fg = p.fg0, bg = p.bg3, bold = true })
 
-	-- Popup menus
+	-- Popup
 	vim.api.nvim_set_hl(0, "Pmenu", { fg = p.fg2, bg = p.bg2 })
 	vim.api.nvim_set_hl(0, "PmenuSel", { fg = p.fg1, bg = p.bg3 })
 
