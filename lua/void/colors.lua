@@ -1,56 +1,33 @@
 local M = {}
-
 M.palette = {
 	---------------------------------------------------------------------------
 	-- CORE BACKGROUND SHADES (dark → light)
-	-- bg0: Extreme darkest background. Use sparingly (e.g. backdrop, contrast)
-	bg0 = "#0D0D0D",
-	-- bg1: Primary editor background (Normal). Change this first when theming.
-	bg1 = "#121212",
-	-- bg2: Secondary surface (CursorLine, popup menus, subtle panels, selection bg)
-	bg2 = "#333333",
-	-- bg3: Elevated / emphasized surface (statusline, tabline selected, titles)
-	bg3 = "#212121",
-
+	bg0 = "#050308", -- extreme darkest purple-black
+	bg1 = "NONE", -- transparent primary background
+	bg2 = "#1F1635", -- secondary surface (CursorLine, panels)
+	bg3 = "#311F4F", -- elevated surface (statusline, titles)
 	---------------------------------------------------------------------------
 	-- CORE FOREGROUNDS (bright → dim)
-	-- fg0: Maximum contrast foreground (headings, strong emphasis)
-	fg0 = "#FFFFFF",
-	-- fg1: Primary text (Normal fg). Your main readable color.
-	fg1 = "#EAEAEA",
-	-- fg2: Secondary text (less important content, doc strings, mild dim)
-	fg2 = "#BEBEBE",
-	-- fg3: Tertiary / subtle text (line numbers, inactive, meta info)
-	fg3 = "#8A8A8D",
-
+	fg0 = "#FFFFFF", -- maximum contrast foreground
+	fg1 = "#B497CE", -- primary text (soft pastel)
+	fg2 = "#D1C3EB", -- secondary text (graph labels)
+	fg3 = "#4A3D5C", -- tertiary / subtle text
 	---------------------------------------------------------------------------
 	-- SELECTION & MISC
-	-- selbg: Visual selection background, also used for inverse accents
-	selbg = "#262626",
-	-- selfg: Foreground inside selected regions (ensure contrast vs selbg)
-	selfg = "#EAEAEA",
-	-- comment: Comment text + doc annotations (generally muted)
-	comment = "#8A8A8D",
-
+	selbg = "#1F1635", -- visual selection background
+	selfg = "#FFFFFF", -- foreground inside selected regions
+	comment = "#4A3D5C", -- comment text + doc annotations
 	---------------------------------------------------------------------------
 	-- ACCENT / SEMANTIC COLOR SLOTS
-	-- color1: Error / critical / strong statement (used for errors, statements, git removed)
-	color1 = "#FF3E55",
-	-- color2: Primary accent / info highlight (mode indicators, roots, success/add)
-	color2 = "#00D6D1",
-	-- color3: Attention / todo / highlight matches (TODO tags, search matches)
-	color3 = "#FFD447",
-	-- color4: Modified / constant / neutral warm accent (constants, modified files)
-	color4 = "#5A7CFF",
-	-- color5: Type / secondary accent / soft alert (types, replace mode, interface)
-	color5 = "#FF7DEB",
-	-- color6: Keywords / strong structural tokens / alternate error (keywords, visual mode bg, directives)
-	color6 = "#4CFF8F",
-
+	color1 = "#E0586A", -- error / critical (crimson accent)
+	color2 = "#52B8A3", -- primary accent / info (teal)
+	color3 = "#8047B9", -- attention / todo / highlights (purple)
+	color4 = "#9266C4", -- modified / constant (title purple)
+	color5 = "#B497CE", -- type / secondary accent (main fg)
+	color6 = "#C1A3E0", -- keywords / strong tokens (light lavender)
 	---------------------------------------------------------------------------
 	-- UI DECORATIVE & LOW EMPHASIS ELEMENTS
-	-- uic1: Borders, separators, guides, non-content structural UI
-	uic1 = "#5C6370",
+	uic1 = "#311F4F", -- borders, separators, guides
 }
 
 function M.apply()
@@ -61,73 +38,62 @@ function M.apply()
 	end
 	vim.o.background = "dark"
 	vim.g.colors_name = "void"
-
 	-- Basic highlight groups
-
 	vim.api.nvim_set_hl(0, "Normal", { fg = p.fg1, bg = p.bg1 })
+	vim.api.nvim_set_hl(0, "NormalFloat", { fg = p.fg1, bg = p.bg2 })
 	vim.api.nvim_set_hl(0, "CursorLine", { bg = p.bg2 })
-	vim.api.nvim_set_hl(0, "Cursor", { fg = p.bg1, bg = p.color2 })
+	vim.api.nvim_set_hl(0, "Cursor", { fg = p.bg0, bg = p.color2 })
 	vim.api.nvim_set_hl(0, "CursorColumn", { bg = p.bg2 })
 	vim.api.nvim_set_hl(0, "Comment", { fg = p.comment, italic = true })
-	-- Syntax groups using all 6 colors logically:
-	vim.api.nvim_set_hl(0, "Statement", { fg = p.color1 }) -- Statements, error, danger
-	vim.api.nvim_set_hl(0, "Keyword", { fg = p.color2 }) -- Keywords, control flow
-	vim.api.nvim_set_hl(0, "Operator", { fg = p.color2 }) -- Operators
-	vim.api.nvim_set_hl(0, "Constant", { fg = p.color3 }) -- Constants, numbers, enums
-	vim.api.nvim_set_hl(0, "Number", { fg = p.color3 }) -- Numbers
-	vim.api.nvim_set_hl(0, "Boolean", { fg = p.color3 }) -- Booleans
-	vim.api.nvim_set_hl(0, "Type", { fg = p.color4 }) -- Types, classes
-	vim.api.nvim_set_hl(0, "Structure", { fg = p.color4 }) -- Structs, interfaces
-	vim.api.nvim_set_hl(0, "Class", { fg = p.color4 }) -- Classes
-	vim.api.nvim_set_hl(0, "String", { fg = p.color5 }) -- Strings, regex, docstrings
-	vim.api.nvim_set_hl(0, "Special", { fg = p.color5 }) -- Special strings, regex
-	vim.api.nvim_set_hl(0, "Function", { fg = p.color6 }) -- Functions, methods
-	vim.api.nvim_set_hl(0, "Identifier", { fg = p.color6 }) -- Identifiers, builtins
-	vim.api.nvim_set_hl(0, "PreProc", { fg = p.color2 }) -- Preprocessor, macros
+	-- Syntax groups using purple theme colors
+	vim.api.nvim_set_hl(0, "Statement", { fg = p.color1 }) -- crimson statements
+	vim.api.nvim_set_hl(0, "Keyword", { fg = p.color6 }) -- light lavender keywords
+	vim.api.nvim_set_hl(0, "Operator", { fg = p.color6 }) -- operators
+	vim.api.nvim_set_hl(0, "Constant", { fg = p.color5 }) -- main purple constants
+	vim.api.nvim_set_hl(0, "Number", { fg = p.color5 }) -- numbers
+	vim.api.nvim_set_hl(0, "Boolean", { fg = p.color5 }) -- booleans
+	vim.api.nvim_set_hl(0, "Type", { fg = p.color4 }) -- title purple types
+	vim.api.nvim_set_hl(0, "Structure", { fg = p.color4 }) -- structs
+	vim.api.nvim_set_hl(0, "Class", { fg = p.color4 }) -- classes
+	vim.api.nvim_set_hl(0, "String", { fg = p.color1 }) -- crimson strings
+	vim.api.nvim_set_hl(0, "Special", { fg = p.color1 }) -- special strings
+	vim.api.nvim_set_hl(0, "Function", { fg = p.color2 }) -- teal functions
+	vim.api.nvim_set_hl(0, "Identifier", { fg = p.color2 }) -- identifiers
+	vim.api.nvim_set_hl(0, "PreProc", { fg = p.color3 }) -- purple preprocessor
 	vim.api.nvim_set_hl(0, "Underlined", { fg = p.color4, underline = true })
-	vim.api.nvim_set_hl(0, "Todo", { fg = p.color3, bg = p.bg1, bold = true })
-
-	-- Essential UI elements for better readability
-	vim.api.nvim_set_hl(0, "LineNr", { fg = p.fg3 }) -- Line numbers in subtle gray
-	vim.api.nvim_set_hl(0, "CursorLineNr", { fg = p.color2, bold = true }) -- Current line number highlighted
-	vim.api.nvim_set_hl(0, "Visual", { bg = p.selbg, fg = p.selfg }) -- Selection highlighting
-	vim.api.nvim_set_hl(0, "Search", { fg = p.bg1, bg = p.color3 }) -- Search highlighting
-	vim.api.nvim_set_hl(0, "IncSearch", { fg = p.bg1, bg = p.color2 }) -- Incremental search
-	vim.api.nvim_set_hl(0, "StatusLine", { fg = p.fg1, bg = p.bg3 }) -- Status line
-	vim.api.nvim_set_hl(0, "StatusLineNC", { fg = p.fg3, bg = p.bg2 }) -- Inactive status line
-	vim.api.nvim_set_hl(0, "VertSplit", { fg = p.bg2 }) -- Window splits
-	vim.api.nvim_set_hl(0, "WinSeparator", { fg = p.bg2 }) -- Modern window separators
-	vim.api.nvim_set_hl(0, "TabLine", { fg = p.fg3, bg = p.bg2 }) -- Tab line
-	vim.api.nvim_set_hl(0, "TabLineFill", { bg = p.bg1 }) -- Tab line fill
-	vim.api.nvim_set_hl(0, "TabLineSel", { fg = p.fg1, bg = p.bg3, bold = true }) -- Selected tab
-
-	-- Popup menus for better completion readability
-	vim.api.nvim_set_hl(0, "Pmenu", { fg = p.fg2, bg = p.bg3 }) -- Popup menu
-	vim.api.nvim_set_hl(0, "PmenuSel", { fg = p.fg1, bg = p.bg2 }) -- Selected popup item
-	vim.api.nvim_set_hl(0, "PmenuSbar", { bg = p.bg2 }) -- Popup scrollbar
-	vim.api.nvim_set_hl(0, "PmenuThumb", { bg = p.fg3 }) -- Popup scrollbar thumb
-
+	vim.api.nvim_set_hl(0, "Todo", { fg = p.color3, bg = "NONE", bold = true })
+	-- Essential UI elements
+	vim.api.nvim_set_hl(0, "LineNr", { fg = p.fg3 })
+	vim.api.nvim_set_hl(0, "CursorLineNr", { fg = p.color2, bold = true })
+	vim.api.nvim_set_hl(0, "Visual", { bg = p.selbg, fg = p.selfg })
+	vim.api.nvim_set_hl(0, "Search", { fg = p.bg0, bg = p.color3 })
+	vim.api.nvim_set_hl(0, "IncSearch", { fg = p.bg0, bg = p.color2 })
+	vim.api.nvim_set_hl(0, "StatusLine", { fg = p.fg1, bg = p.bg3 })
+	vim.api.nvim_set_hl(0, "StatusLineNC", { fg = p.fg3, bg = p.bg2 })
+	vim.api.nvim_set_hl(0, "VertSplit", { fg = p.uic1 })
+	vim.api.nvim_set_hl(0, "WinSeparator", { fg = p.uic1 })
+	vim.api.nvim_set_hl(0, "TabLine", { fg = p.fg3, bg = p.bg2 })
+	vim.api.nvim_set_hl(0, "TabLineFill", { bg = "NONE" })
+	vim.api.nvim_set_hl(0, "TabLineSel", { fg = p.fg1, bg = p.bg3, bold = true })
+	-- Popup menus
+	vim.api.nvim_set_hl(0, "Pmenu", { fg = p.fg2, bg = p.bg3 })
+	vim.api.nvim_set_hl(0, "PmenuSel", { fg = p.fg1, bg = p.bg2 })
+	vim.api.nvim_set_hl(0, "PmenuSbar", { bg = p.bg2 })
+	vim.api.nvim_set_hl(0, "PmenuThumb", { bg = p.fg3 })
 	-- Error and warning highlights
-	vim.api.nvim_set_hl(0, "Error", { fg = p.color1, bold = true }) -- Error text
-	vim.api.nvim_set_hl(0, "ErrorMsg", { fg = p.color1, bold = true }) -- Error messages
-	vim.api.nvim_set_hl(0, "WarningMsg", { fg = p.color2, bold = true }) -- Warning messages
-	vim.api.nvim_set_hl(0, "ModeMsg", { fg = p.fg2 }) -- Mode messages
-
+	vim.api.nvim_set_hl(0, "Error", { fg = p.color1, bold = true })
+	vim.api.nvim_set_hl(0, "ErrorMsg", { fg = p.color1, bold = true })
+	vim.api.nvim_set_hl(0, "WarningMsg", { fg = p.color3, bold = true })
+	vim.api.nvim_set_hl(0, "ModeMsg", { fg = p.fg2 })
 	-- Apply Treesitter theming
 	require("void.treesitter").apply()
-
 	-- Apply Snacks.nvim theming
 	require("void.snacks").apply()
-
 	-- Apply todo-comments.nvim theming
 	require("void.todo-comments").apply()
-
 	-- Apply Noice.nvim theming
 	require("void.noice").apply()
-
 	-- Apply neotree theming
 	require("void.neotree").apply()
 end
-
 return M
-
