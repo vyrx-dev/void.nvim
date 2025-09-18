@@ -1,0 +1,2 @@
+require("void").colorscheme()
+
